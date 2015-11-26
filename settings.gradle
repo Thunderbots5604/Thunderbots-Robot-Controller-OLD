@@ -1,2 +1,3 @@
+include ':fileaccess', ':camera'
 // FTC Apps
 include (':FtcRobotController')
