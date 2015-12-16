@@ -110,16 +110,39 @@ public class OpModeClassLoader {
             attemptLoadClass(i);
     }
 
+    /**
+     * Attempts to instantiate the given class. If the class is instantiable and a subclass of OpMode,
+     * it will be added to opModeList
+     *
+     * @param c the Class to be tested and added to opModeList
+     */
+    @SuppressWarnings("unchecked")
     private static void attemptLoadOpMode(Class<?> c) {
         try {
-            Object instance = c.newInstance();
-            if (instance instanceof OpMode) {
+            if (OpMode.class.isAssignableFrom(c) && attemptInstantiate((Class<OpMode>) c)) {
                 ThunderLog.i("Found " + c.getSimpleName() + " as an op mode");
-                opModeList.add(((OpMode) instance).getClass());
+                opModeList.add((Class<OpMode>) c);
             }
         } catch (Throwable ignore) {
 
         }
+    }
+
+    /**
+     * Tests the instantiability of the given class
+     *
+     * @param c the class to be tested
+     * @return whether or not the class is instantiable
+     */
+    private static boolean attemptInstantiate(Class<? extends OpMode> c) {
+        try {
+            Object instance = c.newInstance();
+        } catch (IllegalAccessException ex) {
+            return false;
+        } catch (InstantiationException ex) {
+            return false;
+        }
+        return true;
     }
 
     private static URL[] getJarURLs(List<File> fileList) {
