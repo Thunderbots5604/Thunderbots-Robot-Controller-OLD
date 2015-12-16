@@ -105,6 +105,12 @@ public class OpModeClassLoader {
      * @param c the Class of the opmode to be loaded
      */
     private static void attemptLoadClass(Class<?> c) {
+        attemptLoadOpMode(c);
+        for (Class<?> i : c.getDeclaredClasses())
+            attemptLoadClass(i);
+    }
+
+    private static void attemptLoadOpMode(Class<?> c) {
         try {
             Object instance = c.newInstance();
             if (instance instanceof OpMode) {
@@ -113,9 +119,6 @@ public class OpModeClassLoader {
             }
         } catch (Throwable ignore) {
 
-        }
-        for (Class<?> i : c.getDeclaredClasses()) {
-            attemptLoadClass(i);
         }
     }
 
