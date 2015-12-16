@@ -83,33 +83,66 @@ public class OpModeClassLoader {
         Enumeration<String> jarentries = jarobj.entries();
         while (jarentries.hasMoreElements()) {
             String entry = jarentries.nextElement();
-            attemptLoadClass(entry);
+            try {
+                Class<?> c = classLoader.loadClass(entry);
+                attemptLoadClass(c);
+            }
+            catch (Throwable ex) {
+
+            }
         }
         jarobj.close();
     }
 
     /**
-     * Attempts to load a class with the given fully-qualified name. Any exception thrown from
+     * Attempts to load the given class and any nested classes recursively. Any exception thrown from
      * within this method will be caught and handled (either ignored or logged).
      * <br>
      * The class will be loaded by the {@code classLoader} class variable. If the loaded class is
      * a valid, instantiable {@code OpMode}, it will be added to the {@code opModeList} class
      * variable.
      *
-     * @param classname the fully-qualified name of the class to be resolved.
+     * @param c the Class of the opmode to be loaded
      */
-    private static void attemptLoadClass(String classname) {
+    private static void attemptLoadClass(Class<?> c) {
+        attemptLoadOpMode(c);
+        for (Class<?> i : c.getDeclaredClasses())
+            attemptLoadClass(i);
+    }
+
+    /**
+     * Attempts to instantiate the given class. If the class is instantiable and a subclass of OpMode,
+     * it will be added to opModeList
+     *
+     * @param c the Class to be tested and added to opModeList
+     */
+    @SuppressWarnings("unchecked")
+    private static void attemptLoadOpMode(Class<?> c) {
         try {
-            Class<?> c = classLoader.loadClass(classname);
-            Object instance = c.newInstance();
-            if (instance instanceof OpMode) {
-                ThunderLog.i("Found " + classname + " as an op mode");
-                opModeList.add(((OpMode)instance).getClass());
+            if (OpMode.class.isAssignableFrom(c) && attemptInstantiate((Class<OpMode>) c)) {
+                ThunderLog.i("Found " + c.getSimpleName() + " as an op mode");
+                opModeList.add((Class<OpMode>) c);
             }
-        } catch (Throwable ex) {
-            //ThunderLog.e("Exception while loading " + entryname + ": ");//, ex)
-            //ThunderLog.e(ex.getMessage());// ;
+        } catch (Throwable ignore) {
+
         }
+    }
+
+    /**
+     * Tests the instantiability of the given class
+     *
+     * @param c the class to be tested
+     * @return whether or not the class is instantiable
+     */
+    private static boolean attemptInstantiate(Class<? extends OpMode> c) {
+        try {
+            Object instance = c.newInstance();
+        } catch (IllegalAccessException ex) {
+            return false;
+        } catch (InstantiationException ex) {
+            return false;
+        }
+        return true;
     }
 
     private static URL[] getJarURLs(List<File> fileList) {
