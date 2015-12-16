@@ -83,32 +83,39 @@ public class OpModeClassLoader {
         Enumeration<String> jarentries = jarobj.entries();
         while (jarentries.hasMoreElements()) {
             String entry = jarentries.nextElement();
-            attemptLoadClass(entry);
+            try {
+                Class<?> c = classLoader.loadClass(entry);
+                attemptLoadClass(c);
+            }
+            catch (Throwable ex) {
+
+            }
         }
         jarobj.close();
     }
 
     /**
-     * Attempts to load a class with the given fully-qualified name. Any exception thrown from
+     * Attempts to load the given class and any nested classes recursively. Any exception thrown from
      * within this method will be caught and handled (either ignored or logged).
      * <br>
      * The class will be loaded by the {@code classLoader} class variable. If the loaded class is
      * a valid, instantiable {@code OpMode}, it will be added to the {@code opModeList} class
      * variable.
      *
-     * @param classname the fully-qualified name of the class to be resolved.
+     * @param c the Class of the opmode to be loaded
      */
-    private static void attemptLoadClass(String classname) {
+    private static void attemptLoadClass(Class<?> c) {
         try {
-            Class<?> c = classLoader.loadClass(classname);
             Object instance = c.newInstance();
             if (instance instanceof OpMode) {
-                ThunderLog.i("Found " + classname + " as an op mode");
-                opModeList.add(((OpMode)instance).getClass());
+                ThunderLog.i("Found " + c.getSimpleName() + " as an op mode");
+                opModeList.add(((OpMode) instance).getClass());
             }
-        } catch (Throwable ex) {
-            //ThunderLog.e("Exception while loading " + entryname + ": ");//, ex)
-            //ThunderLog.e(ex.getMessage());// ;
+        } catch (Throwable ignore) {
+
+        }
+        for (Class<?> i : c.getDeclaredClasses()) {
+            attemptLoadClass(i);
         }
     }
 
