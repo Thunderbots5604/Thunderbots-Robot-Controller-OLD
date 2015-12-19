@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
-public class ThunderOpModeRegister {
+public class OpModeRegister {
 
     public static void register(OpModeManager manager) {
         ThunderLog.v("About to register op modes...");
