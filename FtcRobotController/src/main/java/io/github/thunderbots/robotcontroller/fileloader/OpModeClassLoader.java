@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 
 import dalvik.system.DexClassLoader;
@@ -119,21 +120,46 @@ public class OpModeClassLoader {
 
     public static List<File> getFileSet() {
         List<File> fileList = new ArrayList<File>();
-        getFilesInDirectory(getTargetDirectory(), fileList);
+        getFilesInDirectory(getBaseDirectory(), fileList);
         return fileList;
     }
 
-    private static void getFilesInDirectory(File current, List<File> fileList) {
-        for (File f : current.listFiles()) {
-            if (f.isFile()) {
-                fileList.add(f);
-            } else if (f.isDirectory()) {
-                getFilesInDirectory(f, fileList);
-            }
-        }
+    /**
+     * Recursively finds all the files in a given base directory. This method essentially
+     * acts as a delegate to {@link #getFilesInDirectory(File, List)}
+     *
+     * @param baseDirectory the directory to search for files and subdirectories.
+     * @return the list of all files in the base directory.
+     * @see #getFilesInDirectory(File, List)
+     */
+    private static List<File> getFilesInDirectory(File baseDirectory) {
+        return getFilesInDirectory(baseDirectory, new LinkedList<File>());
     }
 
-    private static File getTargetDirectory() {
+    /**
+     * Recursively finds all the files in a given base directory, and adds them to the given list.
+     *
+     * @param baseDirectory the directory to search for files and subdirectories.
+     * @param foundFiles the list of all files that have been found.
+     * @return the list of all files in the base directory.
+     */
+    private static List<File> getFilesInDirectory(File baseDirectory, List<File> foundFiles) {
+        for (File f : baseDirectory.listFiles()) {
+            if (f.isFile()) {
+                foundFiles.add(f);
+            } else if (f.isDirectory()) {
+                getFilesInDirectory(f, foundFiles);
+            }
+        }
+        return foundFiles;
+    }
+
+    /**
+     * Returns the directory that should be searched for jar files.
+     *
+     * @return the base directory for all jar files.
+     */
+    private static File getBaseDirectory() {
         File sdcard = Environment.getExternalStorageDirectory();
         return new File(sdcard, FILE_LOCATION);
     }
