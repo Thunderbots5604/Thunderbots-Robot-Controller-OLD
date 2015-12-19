@@ -8,31 +8,10 @@ import com.android.dx.command.Main;
 
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
-/**
- * The {@code DalvikCompiler} class contains static methods for compiling standard java
- * jar files to Dalvik-compatible jar files. This allows the VM to search and instantiate
- * classes in the jar later.
- *
- * @author Zach Ohara
- */
 public class DalvikConverter {
 
-    /**
-     * The sub-directory of the application's private data folder that is used to cache
-     * the Dalvik-compiled jar files. The actual directory doesn't matter at all, as long
-     * as the directory is not used for anything else.
-     */
     private static final String OUTPUT_TO = "/thunderbots/compiled";
 
-    /**
-     * Compiles the given list of jar files to Dalvik-compatible jar files, and stores the compiled
-     * jar files in a cache folder. As every jar file is compiled, its {@code File} in the list is
-     * changed to reflect its new location. Files that cannot be opened are logged to Logcat.
-     * <br>
-     * The files in {@code jarList} must all be .jar files as a prerequisite.
-     *
-     * @param jarList the list of jar files to compile.
-     */
     public static void convertJars(List<File> jarList) {
         String[] args = {"--dex", null, null};
         for (int i = 0; i < jarList.size(); i++) {
@@ -51,12 +30,6 @@ public class DalvikConverter {
         }
     }
 
-    /**
-     * Generates a file path for the compiled and cached jar from the given jar file.
-     *
-     * @param inputFile the jar file to generate a cache file path for.
-     * @return the cache file path for the given jar.
-     */
     private static File outputFile(File inputFile) {
         String inputName = inputFile.getName();
         inputName = inputName.replace(" ", "-");
@@ -68,12 +41,6 @@ public class DalvikConverter {
         return new File(output, "compiled-" + inputFile.getName());
     }
 
-    /**
-     * Removes all the non-jar files from the given list of {@code File} objects.
-     *
-     * @param fileList a list of file objects.
-     * @return the list of file objects, but with all non-jar files removed.
-     */
     public static List<File> getJarList(List<File> fileList) {
         for (int i = fileList.size() - 1; i >= 0; i--) {
             if (!fileList.get(i).getName().endsWith(".jar")) {
