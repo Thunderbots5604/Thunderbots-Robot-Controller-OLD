@@ -118,10 +118,46 @@ public class OpModeClassLoader {
         return jarList.toArray(new URL[jarList.size()]);
     }
 
-    public static List<File> getFileSet() {
-        List<File> fileList = new ArrayList<File>();
-        getFilesInDirectory(getBaseDirectory(), fileList);
+    /**
+     * Builds a list of all the JAR files that exist within the target directory. The list is built
+     * in the {@link #getFileSet()} method, and then all the non-JAR files are removed from the list.
+     *
+     * @return
+     */
+    public static List<File> getJarList() {
+        List<File> fileList = getFileSet();
+        filterForType(fileList, "jar");
         return fileList;
+    }
+
+    /**
+     * Filter out all items from a file list that are not the given type.
+     *
+     * @param fileList the list of files to filter.
+     * @param filetype the file type to isolate.
+     */
+    private static void filterForType(List<File> fileList, String filetype) {
+        if (!filetype.startsWith(".")) {
+            filetype = "." + filetype;
+        }
+        for (int i = fileList.size() - 1; i >= 0; i--) {
+            if (!fileList.get(i).getName().toLowerCase().endsWith(filetype)) {
+                fileList.remove(i);
+            }
+        }
+    }
+
+    /**
+     * Builds a list of every file that exists within the target directory. This method essentially
+     * acts as a delegate to {@link #getFilesInDirectory(File)} with {@link #getTargetDirectory()}
+     * as an argument.
+     *
+     * @return a list of every file that exists within the target directory.
+     * @see #getFilesInDirectory(File)
+     * @see #getTargetDirectory()
+     */
+    public static List<File> getFileSet() {
+        return getFilesInDirectory(getTargetDirectory());
     }
 
     /**
@@ -159,7 +195,7 @@ public class OpModeClassLoader {
      *
      * @return the base directory for all jar files.
      */
-    private static File getBaseDirectory() {
+    private static File getTargetDirectory() {
         File sdcard = Environment.getExternalStorageDirectory();
         return new File(sdcard, FILE_LOCATION);
     }
