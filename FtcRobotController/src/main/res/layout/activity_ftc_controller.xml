@@ -60,10 +60,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:layout_width="wrap_content"
       android:layout_height="wrap_content"
         android:textColor="@color/white"
-      android:padding="8dp"
       android:textSize="16sp"
       android:textStyle="bold"
-        android:layout_alignTop="@+id/robotIcon"
+        android:layout_alignBottom="@+id/robotIcon"
         android:layout_toRightOf="@+id/robotIcon" />
 
     <ImageButton
@@ -81,17 +80,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       android:layout_centerInParent="true"
       android:layout_centerHorizontal="true"
       android:layout_margin="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Thunderbots RC"
-        android:id="@+id/textView"
-        android:layout_alignBottom="@+id/robotIcon"
-        android:layout_toRightOf="@+id/robotIcon"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
 
   </RelativeLayout>
   <!-- end of blue bar -->
