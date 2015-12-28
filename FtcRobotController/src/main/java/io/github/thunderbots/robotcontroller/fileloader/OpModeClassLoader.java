@@ -119,10 +119,31 @@ public class OpModeClassLoader {
     }
 
     /**
+     * Constructs a list of URL's from the given list of Files. If any given file cannot be
+     * converted to a URL, the exception will be caught and logged, and the method will continue
+     * to convert subsequent files.
+     *
+     * @param fileList the list of files to convert to URL's.
+     * @return a list of URL's.
+     */
+    public static List<URL> getUrlList(List<File> fileList) {
+        List<URL> urlList = new LinkedList<URL>();
+        for (File f : fileList) {
+            try {
+                urlList.add(f.getAbsoluteFile().toURI().toURL());
+            } catch (MalformedURLException e) {
+                ThunderLog.e("Cannot convert a file to URL:");
+                e.printStackTrace();
+            }
+        }
+        return urlList;
+    }
+
+    /**
      * Builds a list of all the JAR files that exist within the target directory. The list is built
      * in the {@link #getFileSet()} method, and then all the non-JAR files are removed from the list.
      *
-     * @return
+     * @return a list of the JAR files in the target directory.
      */
     public static List<File> getJarList() {
         List<File> fileList = getFileSet();
