@@ -23,7 +23,6 @@ public class OpModeClassLoader {
     private static ClassLoader classLoader;
     private static List<Class<? extends OpMode>> opModeList;
 
-    public static final String FILE_LOCATION = "FIRST";
 
     public static List<Class<? extends OpMode>> loadJars(List<File> fileList) {
         URL[] jarurls = getJarURLs(fileList);

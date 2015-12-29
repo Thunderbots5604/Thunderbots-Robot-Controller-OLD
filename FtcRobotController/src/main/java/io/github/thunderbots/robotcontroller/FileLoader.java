@@ -12,6 +12,7 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
 public class FileLoader {
 
+    public static final String FILE_LOCATION = "FIRST"; // on the SD card
 
     /**
      * Constructs a list of URL's from the given list of Files. If any given file cannot be
@@ -113,6 +114,7 @@ public class FileLoader {
      */
     private static File getTargetDirectory() {
         File sdcard = Environment.getExternalStorageDirectory();
-        return new File(sdcard, OpModeClassLoader.FILE_LOCATION);
+        return new File(sdcard, FileLoader.FILE_LOCATION);
     }
+
 }
