@@ -41,13 +41,4 @@ public class DalvikConverter {
         return new File(output, "compiled-" + inputFile.getName());
     }
 
-    public static List<File> getJarList(List<File> fileList) {
-        for (int i = fileList.size() - 1; i >= 0; i--) {
-            if (!fileList.get(i).getName().endsWith(".jar")) {
-                fileList.remove(i);
-            }
-        }
-        return fileList;
-    }
-
 }
