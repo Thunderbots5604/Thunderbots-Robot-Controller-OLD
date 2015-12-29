@@ -12,7 +12,7 @@ public class OpModeRegister {
 
     public static void register(OpModeManager manager) {
         List<File> fileList = FileLoader.getJarList();
-        DalvikConverter.convertJars(fileList);
+        fileList = DalvikConverter.convertJars(fileList);
         List<Class<? extends OpMode>> opmodeList = OpModeClassLoader.loadJars(fileList);
         ThunderLog.i("Now registering op modes");
         for (Class<? extends OpMode> opmode : opmodeList) {
