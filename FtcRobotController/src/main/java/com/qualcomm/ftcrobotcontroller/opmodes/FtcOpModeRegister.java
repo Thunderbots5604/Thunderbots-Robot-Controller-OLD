@@ -33,7 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 
-import io.github.thunderbots.robotcontroller.fileloader.OpModeRegister;
+import io.github.thunderbots.robotcontroller.OpModeRegister;
 
 /**
  * Register Op Modes

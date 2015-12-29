@@ -1,4 +1,4 @@
-package io.github.thunderbots.robotcontroller.fileloader;
+package io.github.thunderbots.robotcontroller;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;

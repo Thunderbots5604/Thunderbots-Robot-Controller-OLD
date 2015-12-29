@@ -1,4 +1,4 @@
-package io.github.thunderbots.robotcontroller.fileloader;
+package io.github.thunderbots.robotcontroller;
 
 import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
 import java.io.File;

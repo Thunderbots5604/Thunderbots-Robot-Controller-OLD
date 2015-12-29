@@ -1,4 +1,4 @@
-package io.github.thunderbots.robotcontroller.fileloader;
+package io.github.thunderbots.robotcontroller;
 
 import java.lang.annotation.Annotation;
 
