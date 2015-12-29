@@ -11,7 +11,7 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 public class OpModeRegister {
 
     public static void register(OpModeManager manager) {
-        List<File> fileList = OpModeClassLoader.getFileSet();
+        List<File> fileList = FileLoader.getFileSet();
         DalvikConverter.getJarList(fileList);
         DalvikConverter.convertJars(fileList);
         List<Class<? extends OpMode>> opmodeList = OpModeClassLoader.loadJars(fileList);
