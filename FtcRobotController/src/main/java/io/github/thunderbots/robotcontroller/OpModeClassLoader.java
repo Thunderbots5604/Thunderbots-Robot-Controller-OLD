@@ -20,13 +20,20 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
 public class OpModeClassLoader {
 
-    private static ClassLoader classLoader;
-    private static List<Class<? extends OpMode>> opModeList;
+    private ClassLoader classLoader;
+    private List<Class<? extends OpMode>> opModeList;
+
+    public List<Class<? extends OpMode>> loadJars(List<File> fileList) {
+        // TODO: call initializeClassLoader before this method
+
+        this.opModeList = new ArrayList<Class<? extends OpMode>>();
+        for (File f : fileList) {
+            loadJarFile(f);
+        }
 
 
-    public static List<Class<? extends OpMode>> loadJars(List<File> fileList) {
-        URL[] jarurls = getJarURLs(fileList);
-        classLoader = getClassLoader(jarurls);
+        URL[] jarURLs = getJarURLs(fileList);
+        classLoader = getClassLoader(jarURLs);
         Thread.currentThread().setContextClassLoader(classLoader);
         opModeList = new ArrayList<Class<? extends OpMode>>();
         for (File jarfile : fileList) {
@@ -39,23 +46,33 @@ public class OpModeClassLoader {
         return opModeList;
     }
 
-    private static ClassLoader getClassLoader(URL[] jarurls) {
-        String pathString = getDelimitedPathString(jarurls);
+    private void initializeClassLoader(List<File> fileList) {
+        List<URL> jarList = FileLoader.getUrlList(fileList);
+        this.classLoader = getClassLoader(jarList);
+        Thread.currentThread().setContextClassLoader(this.classLoader);
+    }
+
+    private ClassLoader getClassLoader(List<URL> jarList) {
+        String pathString = getDelimitedPathString(jarList);
         File cacheFile = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
         cacheFile.mkdirs();
         String cacheDir = cacheFile.toString();
-        ClassLoader parentLoader = OpModeClassLoader.class.getClassLoader();
+        ClassLoader parentLoader = this.getClass().getClassLoader();
         return new DexClassLoader(pathString, cacheDir, null, parentLoader);
     }
 
-    private static <T> String getDelimitedPathString(T[] arr) {
+    private static String getDelimitedPathString(List<? extends Object> list) {
         String result = "";
-        for (T obj : arr) {
+        for (Object o : list) {
             result += File.pathSeparator;
-            result += obj.toString();
+            result += o.toString();
         }
         return result.substring(1);
     }
+
+
+    // everything below is unorganized
+
 
     private static void loadJarFile(File jarfile) throws IOException {
         File cache = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/temp");
