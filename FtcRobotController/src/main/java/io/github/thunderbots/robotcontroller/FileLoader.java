@@ -2,6 +2,8 @@ package io.github.thunderbots.robotcontroller;
 
 import android.os.Environment;
 
+import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -115,6 +117,16 @@ public class FileLoader {
     private static File getTargetDirectory() {
         File sdcard = Environment.getExternalStorageDirectory();
         return new File(sdcard, FileLoader.FILE_LOCATION);
+    }
+
+    /**
+     * Returns the cache directory. This is not a true cache directory, but instead is a directory
+     * in the application's private storage that is used to store temporary files.
+     *
+     * @return the cache directory.
+     */
+    public static File getCacheDirectory() {
+        return new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
     }
 
 }

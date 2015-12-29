@@ -54,7 +54,7 @@ public class OpModeClassLoader {
 
     private ClassLoader getClassLoader(List<URL> jarList) {
         String pathString = getDelimitedPathString(jarList);
-        File cacheFile = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
+        File cacheFile = FileLoader.getCacheDirectory();
         cacheFile.mkdirs();
         String cacheDir = cacheFile.toString();
         ClassLoader parentLoader = this.getClass().getClassLoader();
@@ -75,7 +75,7 @@ public class OpModeClassLoader {
 
 
     private static void loadJarFile(File jarfile) throws IOException {
-        File cache = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/temp");
+        File cache = new File(FileLoader.getCacheDirectory() + "/temp/");
         DexFile jarobj = DexFile.loadDex(jarfile.getAbsolutePath(), cache.getAbsolutePath(), 0);
         Enumeration<String> jarentries = jarobj.entries();
         while (jarentries.hasMoreElements()) {

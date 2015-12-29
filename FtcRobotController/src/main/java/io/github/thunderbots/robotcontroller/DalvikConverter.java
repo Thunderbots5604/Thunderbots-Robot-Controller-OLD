@@ -1,6 +1,5 @@
 package io.github.thunderbots.robotcontroller;
 
-import com.qualcomm.ftcrobotcontroller.FtcRobotControllerActivity;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +10,7 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
 public class DalvikConverter {
 
-    private static final String OUTPUT_DIRECTORY = "/thunderbots/compiled"; // in private files
+    private static final String OUTPUT_DIRECTORY = "/compiled/"; // in private files
 
     /**
      * Converts the jar files in the given list to dalvik-compatible jar files, and returns a list
@@ -50,7 +49,7 @@ public class DalvikConverter {
      */
     private static File getOutputFile(File inputFile) {
         // TODO: find out how the app responds to files with spaces in the name
-        File output = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), OUTPUT_DIRECTORY);
+        File output = new File(FileLoader.getCacheDirectory(), OUTPUT_DIRECTORY);
         if (output.exists()) {
             output.delete();
         }
