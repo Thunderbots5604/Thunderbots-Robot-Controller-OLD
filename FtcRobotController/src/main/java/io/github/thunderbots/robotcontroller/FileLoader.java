@@ -126,7 +126,9 @@ public class FileLoader {
      * @return the cache directory.
      */
     public static File getCacheDirectory() {
-        return new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
+        File cache = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
+        cache.mkdirs();
+        return cache;
     }
 
 }
