@@ -24,8 +24,22 @@ import java.util.List;
 
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
+/**
+ * {@code OpModeRegister} is an extension of
+ * {@link com.qualcomm.ftcrobotcontroller.opmodes.FtcOpModeRegister FtcOpModeRegister} that will
+ * search the file system of the phone for JAR files, and register any compatible code that was
+ * found. This can be thought of as the 'main' class for the dynamic jar loading system.
+ *
+ * @author Zach Ohara
+ */
 public class OpModeRegister {
 
+    /**
+     * Registers all code in the op mode manager. This can be thought of as the 'main' method for
+     * the dynamic jar loading system.
+     *
+     * @param manager the op mode manager to register op modes with.
+     */
     public static void register(OpModeManager manager) {
         List<File> fileList = FileLoader.getJarList();
         fileList = DalvikConverter.convertJars(fileList);
