@@ -24,9 +24,20 @@ import com.android.dx.command.Main;
 
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
+/**
+ * {@code DalvikConverter} is responsible for converting standard Java JAR files to
+ * Dalvik-Compatible JAR files. This conversion is necessary before the class loader is able to
+ * access any of the code in the JAR files.
+ *
+ * @author Zach Ohara
+ */
 public class DalvikConverter {
 
-    private static final String OUTPUT_DIRECTORY = "/compiled/"; // in private files
+    /**
+     * The sub-directory, inside the app's private cache file, that will contain all the
+     * Dalvik-converted JAR files.
+     */
+    private static final String OUTPUT_DIRECTORY = "/converted/";
 
     /**
      * Converts the jar files in the given list to dalvik-compatible jar files, and returns a list
