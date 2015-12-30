@@ -13,13 +13,13 @@ import dalvik.system.DexClassLoader;
 import dalvik.system.DexFile;
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
-public class OpModeClassLoader {
+public class OpModeLoader {
 
     private ClassLoader classLoader;
     private List<File> fileList;
     private List<Class<? extends OpMode>> opModeList;
 
-    public OpModeClassLoader(List<File> fileList) {
+    public OpModeLoader(List<File> fileList) {
         this.fileList = fileList;
         List<URL> jarList = FileLoader.getUrlList(this.fileList);
         this.classLoader = getClassLoader(jarList);
@@ -63,7 +63,7 @@ public class OpModeClassLoader {
     }
 
     private void loadOpMode(Class<?> c) {
-        if (OpMode.class.isAssignableFrom(c) && OpModeClassLoader.isInstantiable(c)) {
+        if (OpMode.class.isAssignableFrom(c) && OpModeLoader.isInstantiable(c)) {
             this.opModeList.add((Class<? extends OpMode>) c);
         }
     }
