@@ -28,8 +28,18 @@ import java.util.List;
 
 import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
+/**
+ * {@code FileLoader} is responsible for all direct file operations on the device. Some of the
+ * provided methods can get files on the phone's SD card, filter those files for JAR-only files,
+ * or access the app's cache directory.
+ *
+ * @author Zach Ohara
+ */
 public class FileLoader {
 
+    /**
+     * The folder on the SD card to search for JAR files.
+     */
     public static final String FILE_LOCATION = "FIRST"; // on the SD card
 
     /**
