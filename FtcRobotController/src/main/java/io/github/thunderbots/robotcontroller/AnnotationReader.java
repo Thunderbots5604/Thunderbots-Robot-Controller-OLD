@@ -21,13 +21,35 @@ import java.lang.annotation.Annotation;
 import io.github.thunderbots.lightning.annotation.Active;
 import io.github.thunderbots.lightning.annotation.OpMode;
 
+/**
+ * {@code AnnotationReader} is resonsible for reading the annotations contained in loaded classes.
+ *
+ * @author Pranav Mathur
+ */
 public class AnnotationReader {
 
-    public static boolean isActive(Class<? extends com.qualcomm.robotcore.eventloop.opmode.OpMode> c) {
+    /**
+     * Determines if the given class has an {@code Active} annotation.
+     *
+     * @param c the class to check for an annotation.
+     * @return {@code true} if the given class has an {@code Active} annotation; {@code false}
+     * otherwise.
+     * @see io.github.thunderbots.lightning.annotation.Active
+     */
+    public static boolean isActive(Class<?> c) {
         return c.isAnnotationPresent(Active.class);
     }
 
-    public static String getOpModeName(Class<? extends com.qualcomm.robotcore.eventloop.opmode.OpMode> c) {
+    /**
+     * Determines the name of any op mode, as specified by its {@code OpMode} annotation. If no
+     * annotation is present, or the name is not defined in the annotation, then the simple name of
+     * the class (the name without any package information) is returned instead.
+     *
+     * @param c the op mode to get the name of.
+     * @return the name of the op mode.
+     * @see io.github.thunderbots.lightning.annotation.OpMode
+     */
+    public static String getOpModeName(Class<?> c) {
         Annotation[] annotations = c.getAnnotations();
         for (Annotation annotation : annotations) {
             if (annotation instanceof OpMode) {
