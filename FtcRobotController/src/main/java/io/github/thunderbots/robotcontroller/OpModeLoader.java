@@ -49,7 +49,7 @@ public class OpModeLoader {
                 Class<?> c = this.classLoader.loadClass(entry);
                 this.loadClass(c);
             } catch (ClassNotFoundException e) {
-
+                e.printStackTrace();
             }
         }
         jar.close();
@@ -62,6 +62,7 @@ public class OpModeLoader {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void loadOpMode(Class<?> c) {
         if (OpMode.class.isAssignableFrom(c) && OpModeLoader.isInstantiable(c)) {
             this.opModeList.add((Class<? extends OpMode>) c);
