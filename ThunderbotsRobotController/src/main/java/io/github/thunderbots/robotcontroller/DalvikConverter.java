@@ -19,10 +19,7 @@ package io.github.thunderbots.robotcontroller;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import com.android.dx.cf.iface.ParseException;
 import com.android.dx.command.Main;
-
-import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 
 /**
  * {@code DalvikConverter} is responsible for converting standard Java JAR files to
@@ -55,13 +52,8 @@ public class DalvikConverter {
                     "--output=" + output.getAbsolutePath(),
                     jar.getAbsolutePath(),
             };
-            try {
-                Main.main(args);
-                convertedJars.add(output);
-            } catch (ParseException e) {
-                ThunderLog.e(jar.getName() + " was probably generated using the wrong compiler!");
-                ThunderLog.e("Make sure to use Java 1.6");
-            }
+            Main.main(args);
+            convertedJars.add(output);
         }
         return convertedJars;
     }
