@@ -46,16 +46,31 @@ public class DalvikConverter {
     public static List<File> convertJars(List<File> jarList) {
         List<File> convertedJars = new LinkedList<File>();
         for (File jar : jarList) {
-            File output = getOutputFile(jar);
-            String[] args = {
-                    "--dex",
-                    "--output=" + output.getAbsolutePath(),
-                    jar.getAbsolutePath(),
-            };
-            Main.main(args);
-            convertedJars.add(output);
+            File converted = DalvikConverter.convertJar(jar);
+            if (converted != null) {
+                convertedJars.add(converted);
+            }
         }
         return convertedJars;
+    }
+
+    /**
+     * Converts the given input file to a dalvik-compatible jar file, then returns the corresponding
+     * output file. If, for any reason, the file cannot be converted, then {@code null} is returned.
+     * All other consequences of the failure will be handled by this method.
+     *
+     * @param jar the file to convert.
+     * @return the converted jar file, or {@code null} if the file cannot be converted.
+     */
+    public static File convertJar(File jar) {
+        File output = getOutputFile(jar);
+        String[] args = {
+                "--dex",
+                "--output=" + output.getAbsolutePath(),
+                jar.getAbsolutePath(),
+        };
+        Main.main(args);
+        return output;
     }
 
     /**
