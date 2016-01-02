@@ -55,13 +55,8 @@ public class DalvikConverter {
                     "--output=" + output.getAbsolutePath(),
                     jar.getAbsolutePath(),
             };
-            try {
-                Main.main(args);
-                convertedJars.add(output);
-            } catch (ParseException e) {
-                ThunderLog.e(jar.getName() + " was probably generated using the wrong compiler!");
-                ThunderLog.e("Make sure to use Java 1.6");
-            }
+            Main.main(args);
+            convertedJars.add(output);
         }
         return convertedJars;
     }
