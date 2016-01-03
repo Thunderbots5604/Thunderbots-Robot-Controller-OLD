@@ -31,7 +31,7 @@ public class LoadableJar {
      *
      * @return the corresponding output file.
      */
-    private File getOutputFile() {
+    private File getConvertedFile() {
         return new File(FileUtil.getJarCacheDirectory(), this.file.getName() + "_converted");
     }
 
