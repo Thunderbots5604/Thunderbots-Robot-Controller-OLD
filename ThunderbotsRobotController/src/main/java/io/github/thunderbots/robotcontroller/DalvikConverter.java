@@ -39,12 +39,6 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
 public class DalvikConverter {
 
     /**
-     * The sub-directory, inside the app's private cache file, that will contain all the
-     * Dalvik-converted JAR files.
-     */
-    private static final String OUTPUT_DIRECTORY = "/converted/";
-
-    /**
      * The maximum allowed (major) Java compiler version.
      */
     private static final int MAX_JAR_VERSION = 51;
@@ -92,6 +86,7 @@ public class DalvikConverter {
                 "--output=" + output.getAbsolutePath(),
                 jar.getAbsolutePath(),
         };
+        // TODO: modify command-line arguments to work with spaced filenames
         Main.main(args);
         return output;
     }
@@ -159,24 +154,6 @@ public class DalvikConverter {
      */
     public static ZipInputStream getZipStream(File file) throws FileNotFoundException {
         return new ZipInputStream(new FileInputStream(file));
-    }
-
-    /**
-     * Gets the output file that corresponds to any given input file. The name of the output file is
-     * identical to the input file, but it will be located in the app's private directory, so that
-     * other apps or users will not be able to see it.
-     *
-     * @param inputFile the input file.
-     * @return the output file corresponding to the input file.
-     */
-    private static File getOutputFile(File inputFile) {
-        // TODO: find out how the app responds to files with spaces in the name
-        File output = new File(FileUtil.getCacheDirectory(), OUTPUT_DIRECTORY);
-        if (output.exists()) {
-            output.delete();
-        }
-        output.mkdirs();
-        return new File(output, "compiled-" + inputFile.getName());
     }
 
 }
