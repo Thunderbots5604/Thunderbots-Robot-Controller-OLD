@@ -45,6 +45,16 @@ public class LoadableJar {
     }
 
     /**
+     * Gets the file object represented by this loadable jar.
+     *
+     * @return the file object represented by this loadable jar.
+     * @see #file
+     */
+    public File getFile() {
+        return this.file;
+    }
+
+    /**
      * Converts this jar file to a dalvik-compatible jar file.
      */
     public void convertToDalvik() {

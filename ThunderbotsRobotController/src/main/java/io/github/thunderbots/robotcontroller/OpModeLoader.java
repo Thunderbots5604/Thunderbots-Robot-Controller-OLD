@@ -37,34 +37,11 @@ import io.github.thunderbots.robotcontroller.logging.ThunderLog;
  */
 public class OpModeLoader {
 
-    /**
-     * The class loader that is used to load all classes from the file system.
-     */
-    private ClassLoader classLoader;
-
-    /**
-     * The list of files that will be searched for op modes.
-     */
-    private List<File> fileList;
 
     /**
      * The list of op modes that can be found inside any of the searched files.
      */
     private List<Class<? extends OpMode>> opModeList;
-
-    /**
-     * Constructs an {@code OpModeLoader} that will load op modes from all of the files in the given
-     * list.
-     *
-     * @param fileList the list of files that will be searched for op modes.
-     * @see #fileList
-     */
-    public OpModeLoader(List<File> fileList) {
-        this.fileList = fileList;
-        List<URL> jarList = FileLoader.getUrlList(this.fileList);
-        this.classLoader = getClassLoader(jarList);
-        Thread.currentThread().setContextClassLoader(this.classLoader);
-    }
 
     /**
      * Gets a list of all op modes inside any of the searched files.
@@ -148,35 +125,6 @@ public class OpModeLoader {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    /**
-     * Gets the class loader that will be used to load all classes from the JAR files.
-     *
-     * @param jarList the list of jars that will be added to the path string of the class loader.
-     * @return a constructed class loader.
-     */
-    private ClassLoader getClassLoader(List<URL> jarList) {
-        String pathString = getDelimitedPathString(jarList);
-        String cacheDir = FileUtil.getCacheDirectory().toString();
-        ClassLoader parentLoader = this.getClass().getClassLoader();
-        return new DexClassLoader(pathString, cacheDir, null, parentLoader);
-    }
-
-    /**
-     * Gets a string representation of the given list, with each entry in the list being delimited
-     * by the system path separator.
-     *
-     * @param list the list to convert to a string.
-     * @return a string representation of the given list.
-     */
-    private static String getDelimitedPathString(List<?> list) {
-        String result = "";
-        for (Object o : list) {
-            result += File.pathSeparator;
-            result += o.toString();
-        }
-        return result.substring(1);
     }
 
 }
