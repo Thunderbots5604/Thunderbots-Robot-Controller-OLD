@@ -91,7 +91,7 @@ public class OpModeLoader {
      * @throws IOException if the file cannot be opened.
      */
     private void loadJar(File jarFile) throws IOException {
-        File cache = new File(FileLoader.getCacheDirectory() + "/temp/");
+        File cache = new File(FileUtil.getCacheDirectory() + "/temp/");
         DexFile jar = DexFile.loadDex(jarFile.getAbsolutePath(), cache.getAbsolutePath(), 0);
         Enumeration<String> entries = jar.entries();
         while(entries.hasMoreElements()) {
@@ -158,7 +158,7 @@ public class OpModeLoader {
      */
     private ClassLoader getClassLoader(List<URL> jarList) {
         String pathString = getDelimitedPathString(jarList);
-        String cacheDir = FileLoader.getCacheDirectory().toString();
+        String cacheDir = FileUtil.getCacheDirectory().toString();
         ClassLoader parentLoader = this.getClass().getClassLoader();
         return new DexClassLoader(pathString, cacheDir, null, parentLoader);
     }

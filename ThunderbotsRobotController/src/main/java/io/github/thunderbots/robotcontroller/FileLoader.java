@@ -145,16 +145,4 @@ public class FileLoader {
         return new File(sdcard, FileLoader.FILE_LOCATION);
     }
 
-    /**
-     * Returns the cache directory. This is not a true cache directory, but instead is a directory
-     * in the application's private storage that is used to store temporary files.
-     *
-     * @return the cache directory.
-     */
-    public static File getCacheDirectory() {
-        File cache = new File(FtcRobotControllerActivity.getPrivateFilesDirectory(), "/thunderbots/");
-        cache.mkdirs();
-        return cache;
-    }
-
 }

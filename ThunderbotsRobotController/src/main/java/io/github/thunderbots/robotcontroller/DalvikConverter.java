@@ -171,7 +171,7 @@ public class DalvikConverter {
      */
     private static File getOutputFile(File inputFile) {
         // TODO: find out how the app responds to files with spaces in the name
-        File output = new File(FileLoader.getCacheDirectory(), OUTPUT_DIRECTORY);
+        File output = new File(FileUtil.getCacheDirectory(), OUTPUT_DIRECTORY);
         if (output.exists()) {
             output.delete();
         }

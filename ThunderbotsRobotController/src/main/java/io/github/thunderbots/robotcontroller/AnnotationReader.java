@@ -22,7 +22,7 @@ import io.github.thunderbots.lightning.annotation.Active;
 import io.github.thunderbots.lightning.annotation.OpMode;
 
 /**
- * {@code AnnotationReader} is resonsible for reading the annotations contained in loaded classes.
+ * {@code AnnotationReader} is responsible for reading the annotations contained in loaded classes.
  *
  * @author Pranav Mathur
  */
