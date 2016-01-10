@@ -18,8 +18,8 @@ package io.github.thunderbots.robotcontroller;
 
 import java.lang.annotation.Annotation;
 
-import io.github.thunderbots.lightning.annotation.Active;
-import io.github.thunderbots.lightning.annotation.OpMode;
+import io.github.thunderbots.annotation.Active;
+import io.github.thunderbots.annotation.OpMode;
 
 /**
  * {@code AnnotationReader} is resonsible for reading the annotations contained in loaded classes.
@@ -34,7 +34,7 @@ public class AnnotationReader {
      * @param c the class to check for an annotation.
      * @return {@code true} if the given class has an {@code Active} annotation; {@code false}
      * otherwise.
-     * @see io.github.thunderbots.lightning.annotation.Active
+     * @see io.github.thunderbots.annotation.Active
      */
     public static boolean isActive(Class<?> c) {
         return c.isAnnotationPresent(Active.class);
@@ -47,7 +47,7 @@ public class AnnotationReader {
      *
      * @param c the op mode to get the name of.
      * @return the name of the op mode.
-     * @see io.github.thunderbots.lightning.annotation.OpMode
+     * @see io.github.thunderbots.annotation.OpMode
      */
     public static String getOpModeName(Class<?> c) {
         Annotation[] annotations = c.getAnnotations();
