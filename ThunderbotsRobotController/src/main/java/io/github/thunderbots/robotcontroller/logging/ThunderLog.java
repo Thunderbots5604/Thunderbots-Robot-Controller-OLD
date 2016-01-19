@@ -29,6 +29,10 @@ public class ThunderLog {
         Log.v(THUNDERBOTS_TAG, msg);
     }
 
+    public static void wtf(String msg) {
+        Log.wtf(THUNDERBOTS_TAG, msg);
+    }
+
     public static void d(String msg, Throwable ex) {
         Log.d(THUNDERBOTS_TAG, msg, ex);
     }
@@ -47,6 +51,10 @@ public class ThunderLog {
 
     public static void v(String msg, Throwable ex) {
         Log.v(THUNDERBOTS_TAG, msg, ex);
+    }
+
+    public static void wtf(String msg, Throwable ex) {
+        Log.wtf(THUNDERBOTS_TAG, msg, ex);
     }
 
 }
